@@ -22,7 +22,7 @@ export default function Nvbar() {
                             Home
                         </NavLink>
                         {' - '}
-                        <NavLink className={activeLink} to='/PokeC/:pokeNombre'>
+                        <NavLink className={activeLink} to='/PokeC'>
                             Pokemon
                         </NavLink>
                     </div>

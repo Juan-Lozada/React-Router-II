@@ -1,57 +1,68 @@
 import React from 'react'
 import { useEffect, useState } from 'react';
-import { Col, Container, Row, Form, Button  } from 'react-bootstrap'
-import { useParams } from "react-router-dom";
 import { useNavigate } from 'react-router-dom'
+
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
+import Button from '@mui/material/Button';
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+
+const axios = require("axios").default;
+
 
 
 
 const Home = () => {
 
-  const [id, setId] = useState('')
   const [pokemones, setPokemones] = useState([])
 
   const navigate = useNavigate()
 
   const goToPokemon = () => {
-    navigate(`/pokemon/${id}`);
-  }
-
+    const pokeFinder = (document.getElementById('PokeSelect')).value;
+    console.log(pokeFinder);
+    navigate(`/PokeC/${pokeFinder}`);
+  };
 
   useEffect(() => {
-    const getPokemones = async () => {
-      const url = await fetch('https://pokeapi.co/api/v2/pokemon/');
-      const resp = await url.json();
-      console.log(resp.results)
-      setPokemones(resp.results)
+    async function getPokemones() {
+      try {
+        const resp = await axios.get(
+          "https://pokeapi.co/api/v2/pokemon?limit=500&offset=0"
+        );
+        const PokeList = resp.data.results;
+        setPokemones(PokeList);
+        
+      } catch (error) {
+        console.error(error);
+      }
     }
-
     getPokemones();
-  }, [])
+  }, []);
 
 
   return (
-    <div>
-      <Container className='d-flex flex-column gap-5 p-4'>
-        <Row className='justify-content-center'>
-          <h1 className='text-center'>Bienvenido Maestro Pokemon!</h1>
-          <img src='https://assets.stickpng.com/images/580b57fcd9996e24bc43c325.png' style={{ width: '50vh' }} alt='Bienvenida' />
-        </Row>
-
-        <Row className='d-flex flex-column gap-2'>
-          <Col className='text-center '>
-            <h1>Buscar Pokemon</h1>
-            <Form.Select className='text-center' onChange={(e) => setId(e.target.value)}>
-              <option defaultValue="selected">-- Seleccione un Pokemon --</option>
-              {pokemones.map((pokemon) => (
-                <option key={pokemon.url} value={pokemon.id}>{pokemon.name}</option>
-              ))}
-            </Form.Select>
-            <Button className='btn-dark' onClick={goToPokemon}>Ir al Pokemon</Button>
-          </Col>
-        </Row>
-      </Container>
-    </div>
+    <Box sx={{ flexGrow: 1 }} className="boxMain">
+      <Grid container className="centerAll">
+        <Grid item xs={12} className="centerAll">
+          <div className="mainHome">
+            <h1 style={{color: '#d03056'}}>POKEMON SEARCH</h1>
+            <Autocomplete
+              getOptionLabel={(pokemon) => pokemon.name}
+              noOptionsText = {'No found this pokemon'}
+              id="PokeSelect"
+              options={pokemones}
+              sx={{ width: 300 }}
+              renderInput={(params) => (
+                <TextField {...params} label="Pokemon" />
+              )}  
+            />
+            <Button style={{marginTop: '20px', width:'20%'}} onClick={goToPokemon} variant="contained">Search</Button>
+          </div>
+        </Grid>
+      </Grid>
+    </Box>
   )
 }
 
