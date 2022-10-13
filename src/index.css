@@ -5,9 +5,21 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-image: url('https://www.gratistodo.com/wp-content/uploads/2016/09/Pokemon-6.jpg');
+  background-repeat: no-repeat;
+  background-size: auto;
+
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
+}
+.mainView {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center ;
+  padding-top: 20vh;
+    
 }

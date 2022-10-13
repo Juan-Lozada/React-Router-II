@@ -1,7 +1,21 @@
 .active {
-    color: #5BB318;
+    color: red
 }
 
 .default {
     color: white;
+}
+
+.select {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 3vh;
+    width: 40vw;
+    height: 20vw;
+    overflow: hidden;
+    border-radius: 5% / 3.5%;
+    border: solid 5px red;
+    background-color: white;
 }
